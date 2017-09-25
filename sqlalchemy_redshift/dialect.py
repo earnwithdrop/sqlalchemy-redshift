@@ -3,7 +3,13 @@ from collections import defaultdict, namedtuple
 
 import pkg_resources
 import sqlalchemy as sa
-from sqlalchemy import Column, exc, inspect
+from sqlalchemy import (
+    Column,
+    exc,
+    inspect,
+    sql,
+    types as sqltypes,
+)
 from sqlalchemy.dialects.postgresql.base import (
     PGCompiler, PGDDLCompiler, PGIdentifierPreparer
 )
