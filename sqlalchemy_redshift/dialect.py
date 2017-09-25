@@ -433,6 +433,15 @@ class RedshiftDialect(PGDialect_psycopg2):
         }
 
     @reflection.cache
+    def get_schema_names(self, connection, **kw):
+        result = connection.execute(
+            sql.text("SELECT nspname FROM pg_namespace "
+                     "WHERE nspname NOT LIKE 'pg_%%' "
+                     "ORDER BY nspname"
+            ).columns(nspname=sqltypes.Unicode))
+        return [name for name, in result]
+
+    @reflection.cache
     def get_foreign_keys(self, connection, table_name, schema=None, **kw):
         """
         Return information about foreign keys in `table_name`.
